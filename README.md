@@ -2,6 +2,19 @@
 
 Single-binary CLI that fetches web resources through TLS fingerprint rotation and optional browser fallback. Designed for agents — one URL in, one response out, zero runtime dependencies.
 
+## Skills
+
+This repository also ships as a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills). Install it with [skit](https://github.com/anthropics/skit):
+
+```
+skit install github:vlln/grab --skill grab
+```
+
+| Skill | Description |
+|-------|-------------|
+| `grab` | Fetch web resources through TLS fingerprint rotation and browser fallback — bypass Cloudflare blocking on academic sites, CDN-protected APIs, and JS-heavy pages |
+
+
 ## Install
 
 ### Download binary (recommended)
@@ -165,7 +178,6 @@ grab Browser (camofox)   → full Chromium rendering, bypasses everything (100%)
 | 0 | Success |
 | 1 | Runtime failure (all engines exhausted, network error, etc.) |
 | 2 | Misconfiguration (invalid mode, `--mode browser` without camofox URL, etc.) |
-
 ## License
 
 MIT
