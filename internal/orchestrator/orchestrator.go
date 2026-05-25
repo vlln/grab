@@ -28,7 +28,7 @@ type Orchestrator struct {
 
 func New(cfg *config.Config, mem *memory.Store) *Orchestrator {
 	level := slog.LevelInfo
-	if cfg.Quiet {
+	if cfg.Silent {
 		level = slog.LevelError
 	}
 	return &Orchestrator{
@@ -211,7 +211,7 @@ func (o *Orchestrator) outputJSON(result *engine.FetchResult) error {
 }
 
 func (o *Orchestrator) log(msg string, args ...any) {
-	if o.Config.Quiet {
+	if o.Config.Silent {
 		return
 	}
 	if !o.Config.Verbose && !strings.HasPrefix(msg, "[") {

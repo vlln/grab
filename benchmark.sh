@@ -75,7 +75,7 @@ test_grab() {
   local start elapsed size blocked status_code fingerprint engine_used exit_code
   start=$(date +%s%N)
   exit_code=0
-  "$GRAB" --mode http --timeout "$TIMEOUT" --json -q "$url" > "$jsonfile" 2>/dev/null || exit_code=$?
+  "$GRAB" --mode http --timeout "$TIMEOUT" --json -s "$url" > "$jsonfile" 2>/dev/null || exit_code=$?
   end=$(date +%s%N)
   elapsed=$(( (end - start) / 1000000 ))
 

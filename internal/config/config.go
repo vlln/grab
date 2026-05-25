@@ -29,7 +29,8 @@ type Config struct {
 	Wait     int
 	JSON     bool
 	Verbose  bool
-	Quiet    bool
+	Silent    bool
+	UserAgent string
 	NoMemory bool
 	Timeout  int
 
@@ -66,8 +67,8 @@ func Validate(cfg *Config) error {
 	default:
 		return &MisconfigError{Msg: fmt.Sprintf("invalid mode %q: must be auto, http, or browser", cfg.Mode)}
 	}
-	if cfg.Verbose && cfg.Quiet {
-		return fmt.Errorf("-v and -q are mutually exclusive")
+	if cfg.Verbose && cfg.Silent {
+		return fmt.Errorf("-v and -s are mutually exclusive")
 	}
 	if cfg.Mode == ModeBrowser && cfg.CamofoxURL == "" {
 			return &MisconfigError{Msg: "--mode browser requires GRAB_CAMOFOX_URL to be set"}

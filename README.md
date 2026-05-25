@@ -26,7 +26,8 @@ grab [flags] <url>
 | `--timeout` | `30` | Request timeout in seconds |
 | `--json` | false | Output JSON envelope |
 | `-v` | false | Verbose logging to stderr |
-| `-q` | false | Suppress non-fatal stderr |
+| `-s` | false | Silent mode (curl-compatible) |
+| `-A <ua>` | — | Custom User-Agent header |
 | `--no-memory` | false | Skip domain memory |
 | `--wait` | `0` | Extra seconds to wait after page load (browser mode) |
 

@@ -45,7 +45,8 @@ func Run(args []string) error {
 	fs.IntVar(&cfg.Wait, "wait", 0, "seconds to wait after page load (browser mode)")
 	fs.BoolVar(&cfg.JSON, "json", false, "output JSON envelope")
 	fs.BoolVar(&cfg.Verbose, "v", false, "verbose logging to stderr")
-	fs.BoolVar(&cfg.Quiet, "q", false, "suppress non-fatal stderr output")
+	fs.StringVar(&cfg.UserAgent, "A", "", "custom User-Agent header")
+	fs.BoolVar(&cfg.Silent, "s", false, "silent mode")
 	fs.BoolVar(&cfg.NoMemory, "no-memory", false, "skip domain memory")
 	fs.IntVar(&cfg.Timeout, "timeout", 30, "request timeout in seconds")
 
@@ -58,6 +59,13 @@ func Run(args []string) error {
 
 	cfg.Mode = config.Mode(mode)
 	cfg.URL = fs.Arg(0)
+
+	if cfg.UserAgent != "" {
+		if headers == nil {
+			headers = make(map[string]string)
+		}
+		headers["User-Agent"] = cfg.UserAgent
+	}
 	cfg.Headers = headers
 
 	config.ApplyDefaults(&cfg)
