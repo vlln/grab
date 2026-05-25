@@ -1,0 +1,16 @@
+# Binary
+/grab
+
+# Benchmark artifacts
+/tmp/
+benchmark.sh
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

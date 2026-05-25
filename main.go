@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vlln/grab/cmd/grab"
+	"github.com/vlln/grab/internal/cli"
 	"github.com/vlln/grab/internal/config"
 )
 
 func main() {
-	if err := grab.Run(os.Args[1:]); err != nil {
+	if err := cli.Run(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		var misconfig *config.MisconfigError
 		if errors.As(err, &misconfig) {

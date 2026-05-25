@@ -1,4 +1,4 @@
-package grab
+package cli
 
 import (
 	"errors"
