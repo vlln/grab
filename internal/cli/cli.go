@@ -31,7 +31,50 @@ func (h headersFlag) Set(s string) error {
 }
 func (h headersFlag) IsBoolFlag() bool { return false }
 
+// reorderArgs moves flags with their values before positional arguments.
+// Lets users write "grab URL -o file" like curl, instead of requiring flags first.
+func reorderArgs(args []string) []string {
+	// Flag names that consume a following value argument.
+	hasValue := map[string]bool{
+		"o": true, "H": true, "A": true, "mode": true,
+		"timeout": true, "wait": true,
+	}
+	flags := make([]string, 0)
+	positional := make([]string, 0)
+	for i := 0; i < len(args); i++ {
+		a := args[i]
+		if strings.HasPrefix(a, "-") && !hasValue[flagName(a)] {
+			// Boolean flag (e.g. -v, -s, -json): no value follows.
+			flags = append(flags, a)
+		} else if strings.HasPrefix(a, "-") && strings.Contains(a, "=") {
+			// --mode=auto, -timeout=30: value inline, single arg.
+			flags = append(flags, a)
+		} else if strings.HasPrefix(a, "-") {
+			// Flag with following value: -o file, -H "K: V"
+			flags = append(flags, a)
+			if i+1 < len(args) {
+				i++
+				flags = append(flags, args[i])
+			}
+		} else {
+			positional = append(positional, a)
+		}
+	}
+	return append(flags, positional...)
+}
+
+// flagName extracts the bare flag name from -x, --xxx, or --xxx=yyy.
+func flagName(arg string) string {
+	s := strings.TrimLeft(arg, "-")
+	if i := strings.IndexByte(s, '='); i >= 0 {
+		s = s[:i]
+	}
+	return s
+}
+
 func Run(args []string) error {
+		// Reorder: move flags before positional args so -o after URL works like curl.
+		args = reorderArgs(args)
 	fs := flag.NewFlagSet("grab", flag.ContinueOnError)
 	fs.SetOutput(nil)
 
