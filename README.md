@@ -98,13 +98,13 @@ grab -v --mode auto https://www.biorxiv.org/content/10.1101/2024.01.01.123456v1
 
 1. **Memory cache** — If the domain was seen before, retry the fingerprint that worked last time.
 2. **HTTP rotation** — Cycle through Chrome 120, Chrome 131, Safari 16.0 TLS fingerprints with matching headers.
-3. **Browser fallback** — When HTTP fails, delegate to a [camofox](https://github.com/vlln/camofox) browser instance for JS-heavy sites.
+3. **Browser fallback** — When HTTP fails, delegate to a [camofox](https://github.com/jo-inc/camofox-browser) browser instance for JS-heavy sites.
 
 Memory is stored at `~/.grab/memory.json`. Use `--no-memory` to bypass it.
 
 ## Browser fallback (optional)
 
-Browser mode requires [camofox](https://github.com/vlln/camofox) running somewhere accessible:
+Browser mode requires [camofox](https://github.com/jo-inc/camofox-browser) running somewhere accessible:
 
 ```
 # Start camofox (Docker)
