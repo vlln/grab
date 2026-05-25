@@ -4,13 +4,39 @@ Single-binary CLI that fetches web resources through TLS fingerprint rotation an
 
 ## Install
 
+### Download binary (recommended)
+
+Grab the latest binary from [releases](https://github.com/vlln/grab/releases):
+
+```bash
+# Linux x86_64
+curl -L -o grab https://github.com/vlln/grab/releases/latest/download/grab-linux-amd64
+chmod +x grab
+
+# macOS Intel
+curl -L -o grab https://github.com/vlln/grab/releases/latest/download/grab-darwin-amd64
+chmod +x grab
+
+# macOS Apple Silicon
+curl -L -o grab https://github.com/vlln/grab/releases/latest/download/grab-darwin-arm64
+chmod +x grab
+```
+
+### Build from source
+
 Requires Go 1.23+.
 
 ```
-go build -o grab .
+go install github.com/vlln/grab@latest
 ```
 
-Produces a static binary. Copy it anywhere.
+Or clone and build:
+
+```
+git clone https://github.com/vlln/grab.git
+cd grab
+go build -o grab .
+```
 
 ## Usage
 
