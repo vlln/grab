@@ -189,17 +189,9 @@ type jsonOutput struct {
 	FromMemory  bool              `json:"from_memory"`
 	Headers     map[string]string `json:"headers"`
 	Body        string            `json:"body"`
-	Truncated   bool              `json:"truncated,omitempty"`
 }
 
 func (o *Orchestrator) outputJSON(result *engine.FetchResult) error {
-	body := string(result.Body)
-	truncated := false
-	if len(body) > 100000 {
-		body = body[:100000]
-		truncated = true
-	}
-
 	out := jsonOutput{
 		URL:         result.URL,
 		StatusCode:  result.StatusCode,
@@ -207,8 +199,7 @@ func (o *Orchestrator) outputJSON(result *engine.FetchResult) error {
 		Fingerprint: result.Fingerprint,
 		FromMemory:  result.FromMemory,
 		Headers:     result.Headers,
-		Body:        body,
-		Truncated:   truncated,
+		Body:        string(result.Body),
 	}
 
 	data, err := json.Marshal(out)
