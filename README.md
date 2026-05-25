@@ -139,3 +139,7 @@ grab Browser (camofox)   → full Chromium rendering, bypasses everything (100%)
 | 0 | Success |
 | 1 | Runtime failure (all engines exhausted, network error, etc.) |
 | 2 | Misconfiguration (invalid mode, `--mode browser` without camofox URL, etc.) |
+
+## License
+
+MIT
