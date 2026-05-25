@@ -4,7 +4,7 @@ Single-binary CLI that fetches web resources through TLS fingerprint rotation an
 
 ## Skills
 
-This repository also ships as a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills). Install it with [skit](https://github.com/anthropics/skit):
+This repository also ships as a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills). Install it with [skit](https://github.com/vlln/skit):
 
 ```
 skit install github:vlln/grab --skill grab
