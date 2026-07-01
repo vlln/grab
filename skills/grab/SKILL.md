@@ -12,38 +12,37 @@ requires:
 
 # grab
 
-Single-binary CLI that fetches web resources through uTLS fingerprint rotation and optional browser fallback via camofox.
+Fetch web resources from sites that block standard HTTP clients, using TLS fingerprint rotation and browser rendering fallback.
 
 ## Trigger Keywords
 
 web scraping, fetch, download, curl, http, cloudflare, 403, blocked, bypass, TLS fingerprint, academic publisher, JS rendering, browser rendering, CDN bypass
 
-## When To Use
+## Capabilities
 
-- The target site returns 403 (Cloudflare), 503, or empty responses to curl/http clients
-- Fetching academic papers from biorxiv, sciencedirect, nejm, wiley, acm, plos, cell, thelancet
-- Sites that require browser JS execution (stackoverflow, reddit, news.ycombinator.com)
-- Any URL where a standard HTTP client fails with TLS-fingerprint-related blocking
+- Bypass Cloudflare and other TLS-fingerprinting CDN blocks that return 403, 503, or empty responses
+- Fetch from academic publisher sites: biorxiv, sciencedirect, nejm, wiley, acm, plos, cell, thelancet
+- Render JavaScript-heavy pages that require a full browser engine (stackoverflow, reddit, news.ycombinator.com)
+- Produce structured JSON output for programmatic parsing
 
-Not for: URLs that curl already handles fine (github, wikipedia, arxiv, etc.).
+Do not use for URLs that curl handles fine (github, wikipedia, arxiv, etc.).
 
 ## Workflow
 
-1. **Fetch with auto mode first** (default). Auto mode tries HTTP rotation first, falls back to browser only on failure:
+1. **Fetch with auto mode first** (default). Auto mode tries HTTP fingerprint rotation first, falls back to browser rendering only on failure:
    ```
    grab --json https://target-url.com
    ```
 
 2. **Parse the JSON output**. On success, extract `body`, `status_code`, `engine_used`, and `headers` from the JSON envelope. The `engine_used` field tells you which engine succeeded (`chrome_120`, `chrome_131`, `safari_16_0`, or `browser`).
 
-3. **On failure**, inspect the exit code: exit 1 means all engines exhausted (try `--mode browser` if camofox is configured, or the site may be unreachable); exit 2 means misconfiguration (set `GRAB_CAMOFOX_URL` when using `--mode browser`).
+3. **On failure**, inspect the exit code: exit 1 means all engines exhausted (try `--mode browser` if browser rendering is configured, or the site may be unreachable); exit 2 means misconfiguration (set `GRAB_CAMOFOX_URL` when using `--mode browser`).
 
 ## Rules
 
 - Always use `--json` when parsing output programmatically. Do not scrape stdout body text.
 - `--mode auto` is the default and the right starting point for most URLs. Only set `--mode browser` when you know the target requires JS rendering.
 - Set `GRAB_CAMOFOX_URL` in the environment before using `--mode browser`. Without it, browser mode fails with exit code 2.
-- Use `-H "Key: Value"` for auth headers, not URL embedding.
 - The `-s` (silent) flag suppresses progress output to stderr but does not affect JSON parsing.
 - URLs with flags after the URL (curl-style like `grab https://example.com -o out.html`) work correctly — grab reorders arguments automatically.
 
@@ -65,15 +64,15 @@ JSON envelope (when `--json` is used):
 
 Exit codes: 0 = success, 1 = all engines exhausted, 2 = misconfiguration.
 
-## Browser Fallback
+## Browser Rendering
 
-Browser mode delegates to a camofox instance for full Chromium rendering:
+Browser mode delegates to a browser rendering service for full Chromium execution:
 
 ```
 GRAB_CAMOFOX_URL=http://localhost:9377 grab --json --mode browser https://js-heavy-site.com
 ```
 
-In `--mode auto`, grab only falls back to camofox after all HTTP fingerprints have been tried — no browser is needed for most sites.
+In `--mode auto`, grab only falls back to browser rendering after all HTTP fingerprints have been tried — no browser is needed for most sites.
 
 ## Gotchas
 
