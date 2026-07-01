@@ -1,21 +1,59 @@
-# grab
+<h1 align="center">grab</h1>
 
-Single-binary CLI that fetches web resources through TLS fingerprint rotation and optional browser fallback. Designed for agents — one URL in, one response out, zero runtime dependencies.
+<p align="center">
+  <strong>Single-binary CLI that fetches web resources through TLS fingerprint rotation and optional browser fallback.</strong><br/>
+  Designed for agents — one URL in, one response out, zero runtime dependencies.<br/>
+  Bypasses Cloudflare blocking on academic sites, CDN-protected APIs, and JS-heavy pages.
+</p>
+
+<p align="center">
+  <a href="https://github.com/vlln/grab/stargazers"><img src="https://badgen.net/github/stars/vlln/grab?label=%E2%98%85" alt="GitHub stars" /></a>
+  <img src="https://badgen.net/badge/license/MIT/blue" alt="MIT" />
+  <img src="https://badgen.net/badge/spec/Agent%20Skills/8257D0" alt="Agent Skills spec" />
+</p>
+
+---
+
+## Installation
+
+### [skit](https://github.com/vlln/skit) (Recommended)
+
+```bash
+skit install https://github.com/vlln/grab/tree/main/skills/grab
+```
+
+### [skill.sh](https://github.com/vercel-labs/skills)
+
+```bash
+npx skills add vlln/grab
+```
+
+### Manually
+
+| Agent | Command |
+|-------|---------|
+| **Claude Code** | `cp -r skills/grab .claude/skills/` |
+| **Codex** | `cp -r skills/grab ~/.codex/skills/` |
+| **OpenCode** | `git clone https://github.com/vlln/grab.git ~/.opencode/skills/grab` |
+| **Kimi** | `cp -r skills/grab ~/.kimi/skills/` |
+
+---
 
 ## Skills
 
-This repository also ships as a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills). Install it with [skit](https://github.com/vlln/skit):
-
-```
-skit install github:vlln/grab --skill grab
-```
-
 | Skill | Description |
 |-------|-------------|
-| `grab` | Fetch web resources through TLS fingerprint rotation and browser fallback — bypass Cloudflare blocking on academic sites, CDN-protected APIs, and JS-heavy pages |
+| [grab](skills/grab/SKILL.md) | Fetch web resources through TLS fingerprint rotation and browser fallback — bypass Cloudflare blocking on academic sites, CDN-protected APIs, and JS-heavy pages |
 
+## Requirements
 
-## Install
+- **grab** binary (install via one of the methods below)
+- Go 1.23+ (if building from source)
+- [camofox](https://github.com/jo-inc/camofox-browser) (optional, for browser fallback mode)
+
+---
+
+## Install the grab binary
 
 ### Download binary (recommended)
 
@@ -178,6 +216,7 @@ grab Browser (camofox)   → full Chromium rendering, bypasses everything (100%)
 | 0 | Success |
 | 1 | Runtime failure (all engines exhausted, network error, etc.) |
 | 2 | Misconfiguration (invalid mode, `--mode browser` without camofox URL, etc.) |
+
 ## License
 
 MIT
